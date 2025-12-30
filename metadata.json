@@ -1,0 +1,5 @@
+{
+  "name": "CADASIL Life Expectancy Modeler",
+  "description": "A probabilistic model estimating life expectancy for CADASIL patients based on JAMA Neurology 2024 data, factoring in sex, age, and clinical stage.",
+  "requestFramePermissions": []
+}
