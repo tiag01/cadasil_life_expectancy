@@ -1,4 +1,4 @@
-import { CadasilStage, Sex, ModelResult, SurvivalDataPoint, ProgressionMarker } from '../types';
+import { CadasilStage, Sex, ModelResult, SurvivalDataPoint, ProgressionMarker, RangeProbability } from '../types';
 
 // Data inferred from JAMA Neurol. 2024 "Life Expectancy in CADASIL"
 // and NOTCH3-SVD staging system.
@@ -10,11 +10,6 @@ const GOMPERTZ_PARAMS = {
 };
 
 // Hazard Ratios for NOTCH3-SVD Staging
-// Stage 0: Asymptomatic carrier (Risk slightly above gen pop due to vascular fragility)
-// Stage 1 (MRI Changes - WMH): Mild risk increase
-// Stage 2 (MRI Changes - Lacunes): Moderate risk, indicates small vessel infarcts
-// Stage 3 (Clinical Disability mRS 3-4): Significant mortality risk
-// Stage 4 (End Stage mRS 5): High mortality risk
 const HAZARD_RATIOS: Record<CadasilStage, number> = {
   [CadasilStage.STAGE_0]: 1.0,    // Baseline CADASIL risk
   [CadasilStage.STAGE_1A]: 1.1,   // Early WMH
@@ -27,8 +22,6 @@ const HAZARD_RATIOS: Record<CadasilStage, number> = {
 };
 
 // Typical Onset Ages for these specific NOTCH3-SVD stages
-// Used for placing markers on the graph.
-// WMH starts early (30s). Lacunes often 40s-50s. Disability 50s-60s.
 const MILESTONES = [
   { label: "Stage 1 (WMH Onset)", age: 32 },
   { label: "Stage 2 (Lacunes/Stroke)", age: 48 },
@@ -113,11 +106,23 @@ export const calculateSurvivalModel = (startAge: number, stage: CadasilStage, se
   const meanExpectancy = sumProductSurvival - 0.5;
   const finalMedian = medianFound ? yearsTo50 : meanExpectancy;
 
+  // Extract Range Probabilities
+  const ranges = [5, 10, 15, 20, 30];
+  const rangeStats: RangeProbability[] = ranges.map(r => {
+    const point = data.find(d => d.year === r);
+    return {
+      yearsFromNow: r,
+      futureAge: startAge + r,
+      probability: point ? point.survivalProbability : 0
+    };
+  }).filter(r => r.probability > 1); // Only show ranges with >1% survival to keep table clean
+
   return {
     meanExpectancy: parseFloat(meanExpectancy.toFixed(1)),
     medianSurvival: parseFloat(finalMedian.toFixed(1)),
     data,
     yearsTo50Percent: finalMedian,
-    progressionMarkers: markers.filter(m => m.year <= data.length - 1)
+    progressionMarkers: markers.filter(m => m.year <= data.length - 1),
+    rangeStats
   };
 };

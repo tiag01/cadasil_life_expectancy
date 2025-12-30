@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" style="background:black">
+  <defs>
+    <filter id="blur"><feGaussianBlur stdDeviation="0.5" /></filter>
+    <filter id="glow"><feGaussianBlur stdDeviation="1.5" /><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <ellipse cx="50" cy="50" rx="40" ry="44" fill="#1a1a1a" stroke="#333" stroke-width="1" />
+  <!-- Shrunken Parenchyma -->
+  <path d="M50 15 C 32 15 18 32 18 50 C 18 68 32 85 50 85 C 68 85 82 68 82 50 C 82 32 68 15 50 15" fill="#2a2a2a" stroke="#000" stroke-width="2" />
+  <!-- Diffuse WMH -->
+  <path d="M50 25 C 35 25 25 40 25 55 C 25 70 35 78 50 78 C 65 78 75 70 75 55 C 75 40 65 25 50 25" fill="#ccc" opacity="0.8" filter="url(#glow)" />
+  <!-- Enlarged Ventricles -->
+  <g transform="scale(1.5)" transform-origin="50 50">
+    <path d="M48 40 Q 50 35 52 40 L 52 60 Q 50 65 48 60 Z" fill="black" />
+    <path d="M48 42 Q 40 35 44 28" stroke="black" stroke-width="3" fill="none" stroke-linecap="round" />
+    <path d="M52 42 Q 60 35 56 28" stroke="black" stroke-width="3" fill="none" stroke-linecap="round" />
+    <path d="M48 58 Q 40 65 38 55" stroke="black" stroke-width="3" fill="none" stroke-linecap="round" />
+    <path d="M52 58 Q 60 65 62 55" stroke="black" stroke-width="3" fill="none" stroke-linecap="round" />
+  </g>
+  <text x="50" y="95" fill="white" font-size="6" font-family="monospace" text-anchor="middle" opacity="0.5">STAGE 4A</text>
+</svg>

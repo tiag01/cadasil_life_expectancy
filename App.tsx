@@ -4,6 +4,7 @@ import { calculateSurvivalModel } from './services/survivalModel';
 import { InputForm } from './components/InputForm';
 import { SurvivalChart } from './components/SurvivalChart';
 import { AnalysisSection } from './components/AnalysisSection';
+import { ProbabilityTable } from './components/ProbabilityTable';
 import { Activity, Info, CalendarClock, TrendingDown } from 'lucide-react';
 
 const App: React.FC = () => {
@@ -109,7 +110,7 @@ const App: React.FC = () => {
                 <div>
                   <h3 className="text-lg font-semibold text-slate-800">Disease Trajectory</h3>
                   <p className="text-xs text-slate-500">
-                    Dots represent typical age of onset for key clinical milestones (Stroke, Dementia, etc.) based on population averages.
+                    Dots represent typical age of onset for key clinical milestones (Stroke, Dementia, etc.).
                   </p>
                 </div>
               </div>
@@ -122,6 +123,9 @@ const App: React.FC = () => {
                  />
               </div>
             </div>
+            
+            {/* New Probability Table */}
+            <ProbabilityTable stats={modelResult.rangeStats} />
 
             {/* AI Analysis */}
             <AnalysisSection 

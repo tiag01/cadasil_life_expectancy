@@ -27,10 +27,17 @@ export interface ProgressionMarker {
   survivalProbability: number;
 }
 
+export interface RangeProbability {
+  yearsFromNow: number;
+  futureAge: number;
+  probability: number;
+}
+
 export interface ModelResult {
   meanExpectancy: number;
   medianSurvival: number;
   data: SurvivalDataPoint[];
   yearsTo50Percent: number;
   progressionMarkers: ProgressionMarker[];
+  rangeStats: RangeProbability[];
 }

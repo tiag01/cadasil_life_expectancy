@@ -1,6 +1,7 @@
 import React from 'react';
 import { CadasilStage, Sex } from '../types';
 import { Activity, User, Dna, Brain } from 'lucide-react';
+import { BrainVisualizer } from './BrainVisualizer';
 
 interface InputFormProps {
   age: number;
@@ -81,10 +82,12 @@ export const InputForm: React.FC<InputFormProps> = ({ age, setAge, stage, setSta
             </select>
             <Brain className="absolute left-3 top-3.5 w-5 h-5 text-slate-400 pointer-events-none" />
           </div>
-          <p className="text-xs text-slate-500 mt-2 leading-relaxed">
+          <p className="text-xs text-slate-500 mt-2 leading-relaxed mb-4">
             <strong>Stages 1-2</strong> are defined by MRI findings (WMH & Lacunes).<br/>
             <strong>Stages 3-4</strong> are defined by clinical disability (mRS score).
           </p>
+          
+          <BrainVisualizer stage={stage} />
         </div>
       </div>
     </div>
